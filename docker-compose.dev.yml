@@ -1,0 +1,47 @@
+services:
+  app:
+    build: ./
+    user: "www-data"
+    ports:
+      - "80:80"
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+    volumes:
+      - './filestorages:/filestorages'
+    depends_on:
+      - mysql
+      - redis
+    restart: always
+
+  redis:
+    image: 'redis:alpine'
+    volumes:
+      - 'redis_data:/data'
+    healthcheck:
+      test:
+        - CMD
+        - redis-cli
+        - ping
+      retries: 3
+      timeout: 5s
+    restart: always
+
+  mysql:
+    image: 'mysql/mysql-server:8.0'
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - '${FORWARD_DB_PORT:-3306}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - 'mysql_data:/var/lib/mysql'
+    restart: always
+
+volumes:
+  redis_data:
+  mysql_data:
