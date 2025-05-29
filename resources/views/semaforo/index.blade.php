@@ -24,9 +24,9 @@ data-placement="bottom" title="Adicionar novo registro">
                         <th>Modelo</th>
                         <th>Controladores</th>
                         <th>IP</th>
-                        @can('GERIR SEMAFORO')
+
                             <th>Ações</th>
-                        @endcan
+
                     </tr>
                 </thead>
 
@@ -39,7 +39,6 @@ data-placement="bottom" title="Adicionar novo registro">
                             <td>{{ $semaforo->controladores }}</td>
                             <td>{{ $semaforo->ip }}</td>
 
-                            @can('GERIR SEMAFORO')
                                 <td class="actions" style="display: flex">
                                     <a href="{{ route('semaforo.edit', $semaforo->id) }}" class="btn btn-warning btn-xs action botao_acao" title="Editar">
                                         <i class="glyphicon glyphicon-pencil"></i>
@@ -52,7 +51,6 @@ data-placement="bottom" title="Adicionar novo registro">
                                         </button>
                                     </form>
                                 </td>
-                            @endcan
                         </tr>
                     @endforeach
                 </tbody>
@@ -105,3 +103,4 @@ data-placement="bottom" title="Adicionar novo registro">
         }
     </script>
 @endpush
+

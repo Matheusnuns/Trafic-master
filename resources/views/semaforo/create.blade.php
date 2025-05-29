@@ -53,8 +53,27 @@
                             </div>
 
                             <div class="form-group col-md-6 col-sm-12 col-xs-12">
-                                <label class="control-label">Imagem</label>
-                                <input type="file" name="imagem" class="form-control">
+                                <label class="form-control-label">Anexar mídia (opcional)</label>
+                                <input class="form-control" type="file" name="midia"
+                                    accept="image/*,video/*,.pdf,.doc,.docx,.xml">
+                            </div>
+                        </div>
+
+                        {{-- CAMPOS CLONÁVEIS --}}
+                        <div class="form-group row">
+                            <div class="col-md-4 mb-2">
+                                <button type="button" class="btn btn-sm btn-primary" onclick="addClonar()">+ Adicionar Clonar</button>
+                            </div>
+
+                            <div class="col-md-12" id="clonar-container">
+                                <div class="row clonar-item mb-2">
+                                    <div class="col-md-10">
+                                        <input class="form-control form-control-sm" type="text" name="clonar[]" placeholder="Clonar">
+                                    </div>
+                                    <div class="col-md-2 d-flex align-items-center">
+                                        <button type="button" class="btn btn-sm btn-danger" onclick="removerClonar(this)">Remover</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -87,5 +106,25 @@
             event.preventDefault();
             window.location.href = "{{ route('semaforo.index') }}";
         });
+
+        function addClonar() {
+            const container = document.getElementById('clonar-container');
+            const item = container.querySelector('.clonar-item');
+            const clone = item.cloneNode(true);
+
+            clone.querySelectorAll('input').forEach(input => {
+                input.value = '';
+            });
+
+            container.appendChild(clone);
+        }
+
+        function removerClonar(button) {
+            const item = button.closest('.clonar-item');
+            const container = document.getElementById('clonar-container');
+            if (container.querySelectorAll('.clonar-item').length > 1) {
+                item.remove();
+            }
+        }
     </script>
 @endpush

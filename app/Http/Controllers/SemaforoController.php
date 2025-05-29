@@ -28,7 +28,7 @@ class SemaforoController extends Controller
             'ip' => 'nullable|ip',
             'relatorio' => 'nullable|string',
             'obs' => 'nullable|string',
-            'imagem' => 'nullable|image|max:2048',
+            'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $data = $request->all();
