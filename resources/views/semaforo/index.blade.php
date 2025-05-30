@@ -103,4 +103,3 @@ data-placement="bottom" title="Adicionar novo registro">
         }
     </script>
 @endpush
-

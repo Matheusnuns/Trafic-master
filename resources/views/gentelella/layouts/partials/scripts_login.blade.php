@@ -1,3 +1,4 @@
+]
 <script src="{{ url(mix('/js/app.js'))}}"></script>
 <script src="{{ asset('/js/components.js')}}"></script>
 
@@ -10,7 +11,7 @@
 <script>
 
 	$().ready(function() {
-	
+
 		@if ($errors->any())
          @foreach ($errors->all() as $error)
 				new PNotify({
@@ -28,12 +29,12 @@
 		$('#rb_escolhe_login_email').change(function(){
 			$('#email').attr('type', 'email');
 			VMasker ($("#email")).unMask();
-		}); 
+		});
       $('#rb_escolhe_login_email').change(function(){
 			$('#email').attr('type', 'text');
 			VMasker ($("#email")).maskPattern("999.999.999-99");
-		}); 
+		});
 	});
-	
+
 </script>
 

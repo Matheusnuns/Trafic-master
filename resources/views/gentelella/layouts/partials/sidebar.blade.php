@@ -24,12 +24,16 @@
 						<a><i class="fas fa-pen-nib"></i> Multas <span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
 							<li><a href="{{ url("/multa") }}"> <i class="fa fa-list"></i> Multas </a></li>
-							<li><a href="{{ url("/semaforos") }}"> <i class="fa fa-list"></i> Semaforo </a></li>
 						</ul>
 					</li>
 				@endif
 			@endauth
-
+            <li>
+                <a><i class="fas fa-pen-nib"></i> Semaforo <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <li><a href="{{ url("/semaforos") }}"> <i class="fa fa-list"></i> Semaforo </a></li>
+                </ul>
+            </li>
 			<li>
 				<a><i class="fas fa-file-pdf"></i> Material de Apoio <span class="fa fa-chevron-down"></span></a>
 				<ul class="nav child_menu">
@@ -82,6 +86,7 @@
 									</ul>
 								</li>
 							@endif
+                            <li><a href="{{url("/SemaforoConfig")}}"><i class="fa fa-list"></i> Semaforo </a></li>
 
 							@if(auth()->user()->can('CONFIG MATERIAL'))
 								<li>

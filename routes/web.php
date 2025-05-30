@@ -10,6 +10,12 @@ Route::get ('/logout', 		'AuthController@logout')->name('logout');
 Route::resource('semaforo', 'SemaforoController');
 
 
+Route::prefix('configs/semaforo')->group(function () {
+    Route::get('/', [SemaforoController::class, 'index'])->name('semaforo.index');
+    Route::get('/create', [SemaforoController::class, 'create'])->name('semaforo.create');
+    Route::post('/', [SemaforoController::class, 'store'])->name('semaforo.store');
+});
+
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get ('/', 							'HomeController@index')->name('home');
