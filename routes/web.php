@@ -166,14 +166,18 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('equipamento',     		    'configs\equipamento\EquipamentoController');
     Route::resource('equipamentotipo',          'configs\equipamento\EquipamentoTipoController');
 
-    
-    Route::prefix('config/semaforo')->name('config.semaforo.')->group(function () {
-        Route::get('/', 'configs\semaforo\SemaforoConfigController@index')->name('index');
-        Route::get('/create', 'configs\semaforo\SemaforoConfigController@create')->name('create');
-        Route::post('/', 'configs\semaforo\SemaforoConfigController@store')->name('store');
-        Route::get('/{id}/edit', 'configs\semaforo\SemaforoConfigController@edit')->name('edit');
-        Route::put('/{id}', 'configs\semaforo\SemaforoConfigController@update')->name('update');
+
+    // Route::prefix('config/semaforo')->name('config.semaforo.')->group(function () {
+    //     Route::get('/', 'configs\semaforo\SemaforoConfigController@index')->name('index');
+    //     Route::get('/create', 'configs\semaforo\SemaforoConfigController@create')->name('create');
+    //     Route::post('/', 'configs\semaforo\SemaforoConfigController@store')->name('store');
+    //     Route::get('/{id}/edit', 'configs\semaforo\SemaforoConfigController@edit')->name('edit');
+    //     Route::put('/{id}', 'configs\semaforo\SemaforoConfigController@update')->name('update');
+    // });
+    Route::prefix('config')->name('config.')->group(function () {
+        Route::resource('semaforo', 'configs\semaforo\SemaforoConfigController');
     });
+
 
     Route::get('semaforos',                      'SemaforoController@index')->name('semaforo.index');
 

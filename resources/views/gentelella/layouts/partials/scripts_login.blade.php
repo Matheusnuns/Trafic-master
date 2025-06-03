@@ -1,4 +1,4 @@
-]
+
 <script src="{{ url(mix('/js/app.js'))}}"></script>
 <script src="{{ asset('/js/components.js')}}"></script>
 

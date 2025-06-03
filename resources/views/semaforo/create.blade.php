@@ -17,42 +17,42 @@
                         @csrf
 
                         <div class="form-group row">
-                            <div class="form-group col-md-4 col-sm-12 col-xs-12">
+                            <div class="form-group col-md-4 col-sm-9 col-xs-9">
                                 <label class="control-label">Data do Relatório</label>
                                 <input type="date" name="data_relatorio" class="form-control" required>
                             </div>
 
-                            <div class="form-group col-md-4 col-sm-12 col-xs-12">
+                            <div class="form-group col-md-4 col-sm-9 col-xs-9">
                                 <label class="control-label">Controladores</label>
                                 <input type="text" name="controladores" class="form-control">
                             </div>
 
-                            <div class="form-group col-md-4 col-sm-12 col-xs-12">
+                            <div class="form-group col-md-4 col-sm-9 col-xs-9">
                                 <label class="control-label">Modelo</label>
                                 <input type="text" name="modelo" class="form-control">
                             </div>
 
-                            <div class="form-group col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group col-md-3 col-sm-9 col-xs-9">
                                 <label class="control-label">Endereço</label>
                                 <input type="text" name="endereco" class="form-control">
                             </div>
 
-                            <div class="form-group col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group col-md-3 col-sm-9 col-xs-9">
                                 <label class="control-label">IP</label>
                                 <input type="text" name="ip" class="form-control">
                             </div>
 
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group col-md-9 col-sm-9 col-xs-9">
                                 <label class="control-label">Relatório</label>
                                 <textarea name="relatorio" class="form-control" rows="4"></textarea>
                             </div>
 
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group col-md-9 col-sm-9 col-xs-9">
                                 <label class="control-label">Observações</label>
                                 <textarea name="obs" class="form-control" rows="3"></textarea>
                             </div>
 
-                            <div class="form-group col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group col-md-3 col-sm-9 col-xs-9">
                                 <label class="form-control-label">Anexar mídia (opcional)</label>
                                 <input class="form-control" type="file" name="midia"
                                     accept="image/*,video/*,.pdf,.doc,.docx,.xml">

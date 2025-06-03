@@ -14,9 +14,10 @@
                 @csrf
 
                 <div class="form-group">
-                    <label class="control-label">Nome</label>
+                    <label>Nome</label>
                     <input type="text" name="nome" class="form-control" required>
                 </div>
+
 
                 <div class="form-group">
                     <label class="control-label">Endereço</label>
