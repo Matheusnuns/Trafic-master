@@ -10,6 +10,7 @@ Route::get ("/login", 		"AuthController@login")->name('login');
 Route::post('/login', 		"AuthController@entrar");
 Route::get ('/logout', 		'AuthController@logout')->name('logout');
 Route::resource('semaforo', 'SemaforoController');
+Route::get('/semaforo/{semaforo}/edit', [SemaforoController::class, 'edit'])->name('semaforo.edit');
 
 
 Route::prefix('configs/semaforo')->group(function () {
@@ -181,6 +182,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('semaforos',                      'SemaforoController@index')->name('semaforo.index');
     Route::get('/semaforo/config/{nome}', [App\Http\Controllers\SemaforoController::class, 'getConfig']);
+  //Route::put('semaforo/updateGrupo/{grupoId}', [SemaforoController::class, 'updateGrupo'])->name('semaforo.updateGrupo');
+   Route::put('/semaforos/update-group', [SemaforoController::class, 'updateGroup'])->name('semaforo.updateGroup');
 
 
 });
