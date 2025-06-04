@@ -180,5 +180,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     Route::get('semaforos',                      'SemaforoController@index')->name('semaforo.index');
+    Route::get('/semaforo/config/{nome}', [App\Http\Controllers\SemaforoController::class, 'getConfig']);
+
 
 });
