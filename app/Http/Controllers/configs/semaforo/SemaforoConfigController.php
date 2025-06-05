@@ -18,23 +18,23 @@ class SemaforoConfigController extends Controller
     {
         return view('configs.semaforo.create'); // necessário para o form
     }
+public function store(Request $request)
+{
+    $request->validate([
+        'controladores' => 'required|string|max:255',
+        'endereco' => 'required|string|max:255',
+        'ip' => 'required|ip',
+    ]);
+    //dd($request->all());
+    SemaforoConfig::create([
+        'controladores' => $request->input('controladores'),
+        'endereco' => $request->input('endereco'),
+        'ip' => $request->input('ip'),
+    ]);
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nome' => 'required|string|max:255',
-            'endereco' => 'required|string|max:255',
-            'ip' => 'required|ip',
-        ]);
+    return redirect()->route('config.semaforo.index')->with('success', 'Semáforo criado com sucesso!');
+}
 
-        SemaforoConfig::create([
-            'nome' => $request->nome,
-            'endereco' => $request->endereco,
-            'ip' => $request->ip,
-        ]);
-
-        return redirect()->route('config.semaforo.index')->with('success', 'Semáforo criado com sucesso!');
-    }
 
     public function edit($id)
     {
@@ -44,14 +44,16 @@ class SemaforoConfigController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nome' => 'required|string|max:255',
-            'endereco' => 'required|string|max:255',
-            'ip' => 'required|ip',
-        ]);
+       $request->validate([
+    'controladores' => 'required|string|max:255',
+    'endereco' => 'required|string|max:255',
+    'ip' => 'required|ip',
+      //  $semaforo = SemaforoConfig::findOrFail($id);
 
-        $semaforo = SemaforoConfig::findOrFail($id);
-        $semaforo->update($request->only(['nome', 'endereco', 'ip']));
+
+]);
+
+$semaforo->update($request->only(['controladores', 'endereco', 'ip']));
 
         return redirect()->route('config.semaforo.index')->with('success', 'Semáforo atualizado com sucesso!');
     }

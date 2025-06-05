@@ -9,7 +9,7 @@ class SemaforoConfig extends Model
     protected $table = 'semaforoconfigs';
 
     protected $fillable = [
-        'nome',
+        'controladores',
         'endereco',
         'ip',
     ];
