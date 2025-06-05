@@ -6,14 +6,39 @@ use App\Models\Semaforo;
 use Illuminate\Http\Request;
 use App\Models\SemaforoConfig;
 use Illuminate\Support\Str;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SemaforoController extends Controller
 {
-    public function index()
-    {
-        $semaforos = Semaforo::latest()->paginate(10);
-        return view('semaforo.index', compact('semaforos'));
-    }
+
+public function index()
+{
+    // Seleciona o menor ID de cada grupo
+    $ids = \App\Models\Semaforo::selectRaw('MIN(id) as id')
+        ->groupBy('grupo_id')
+        ->pluck('id');
+
+    // Busca os semáforos com esses IDs
+    $allItems = \App\Models\Semaforo::whereIn('id', $ids)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    // Paginação manual
+    $perPage = 10;
+    $currentPage = request()->get('page', 1);
+    $currentItems = $allItems->slice(($currentPage - 1) * $perPage, $perPage)->values();
+
+    $semaforos = new LengthAwarePaginator(
+        $currentItems,
+        $allItems->count(),
+        $perPage,
+        $currentPage,
+        ['path' => request()->url(), 'query' => request()->query()]
+    );
+
+    return view('semaforo.index', compact('semaforos'));
+}
+
 
     public function create()
     {
@@ -68,21 +93,20 @@ class SemaforoController extends Controller
 public function edit(Semaforo $semaforo)
 {
     $grupo = Semaforo::where('grupo_id', $semaforo->grupo_id)->get();
+    $grupoId = $semaforo->grupo_id;
 
-    // Coloca o semáforo clicado como o primeiro da lista
-    $grupo = $grupo->sortBy(function ($item) use ($semaforo) {
-        return $item->id === $semaforo->id ? 0 : 1;
-    })->values(); // reindexa os itens
-
-    return view('semaforo.edit', compact('grupo'));
+    return view('semaforo.edit', compact('grupo', 'grupoId'));
 }
+
 
 public function updateGrupo(Request $request, $grupoId)
 {
- $total = count($request->ids);
+    //dd($request->id);
+    $total = count($request->id ?? []);
+//  $total = count($request->ids);
 
 for ($i = 0; $i < $total; $i++) {
-    $semaforo = Semaforo::findOrFail($request->ids[$i]);
+    $semaforo = Semaforo::findOrFail($request->id[$i]);
 
 
         $semaforo->data_relatorio = $request->data_relatorio[$i];

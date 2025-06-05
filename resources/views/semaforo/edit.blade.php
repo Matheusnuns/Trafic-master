@@ -7,9 +7,10 @@
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <form method="post" action="{{ route('semaforo.updateGroup') }}" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
+<form action="{{ route('semaforo.updateGrupo', $grupoId) }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method('PUT')
+
 
                 @foreach($grupo as $index => $semaforo)
                     @php $isMain = $index === 0; @endphp
