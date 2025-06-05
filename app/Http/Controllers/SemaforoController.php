@@ -42,7 +42,7 @@ public function index()
 
     public function create()
     {
-        $controladores = SemaforoConfig::all(['nome']);
+        $controladores = SemaforoConfig::all(['controladores']);
         return view('semaforo.create', compact('controladores'));
     }
 

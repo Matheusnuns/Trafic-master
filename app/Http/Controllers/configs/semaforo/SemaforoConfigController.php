@@ -16,8 +16,10 @@ class SemaforoConfigController extends Controller
 
     public function create()
     {
-        return view('configs.semaforo.create'); // necessário para o form
+        $configs = SemaforoConfig::all(); // ou ->all()
+        return view('configs.semaforo.create', compact('configs'));
     }
+
 public function store(Request $request)
 {
     $request->validate([
@@ -43,18 +45,17 @@ public function store(Request $request)
     }
 
     public function update(Request $request, $id)
-    {
-       $request->validate([
-    'controladores' => 'required|string|max:255',
-    'endereco' => 'required|string|max:255',
-    'ip' => 'required|ip',
-      //  $semaforo = SemaforoConfig::findOrFail($id);
+{
+    $request->validate([
+        'controladores' => 'required|string|max:255',
+        'endereco' => 'required|string|max:255',
+        'ip' => 'required|ip',
+    ]);
 
+    $semaforo = SemaforoConfig::findOrFail($id); // você precisa buscar o registro antes de atualizar
 
-]);
+    $semaforo->update($request->only(['controladores', 'endereco', 'ip']));
 
-$semaforo->update($request->only(['controladores', 'endereco', 'ip']));
-
-        return redirect()->route('config.semaforo.index')->with('success', 'Semáforo atualizado com sucesso!');
-    }
+    return redirect()->route('config.semaforo.index')->with('success', 'Semáforo atualizado com sucesso!');
+}
 }

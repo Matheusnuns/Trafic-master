@@ -27,7 +27,7 @@
                                     <select name="controladores[]" class="form-control controladores" onchange="buscarDadosControlador(this.value, this)">
                                         <option value="">Selecione um controlador</option>
                                         @foreach($controladores as $ctrl)
-                                            <option value="{{ $ctrl->nome }}">{{ $ctrl->nome }}</option>
+                                            <option value="{{ $ctrl->controladores }}">{{ $ctrl->controladores }}</option>
                                         @endforeach
                                     </select>
                                 </div>
