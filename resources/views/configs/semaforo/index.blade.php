@@ -1,4 +1,4 @@
-@extends('gentelella.layouts.app') {{-- ou qualquer outro layout que você já esteja usando no projeto --}}
+@extends('gentelella.layouts.app')
 
 @section('content')
 <div class="x_panel">
@@ -15,7 +15,7 @@
                     <th>Nome</th>
                     <th>Endereço</th>
                     <th>IP</th>
-                    <th>Ações</th>
+                    <th>Ações</th> {{-- Coluna para Editar/Excluir --}}
                 </tr>
             </thead>
             <tbody>
@@ -25,8 +25,17 @@
                         <td>{{ $semaforo->endereco }}</td>
                         <td>{{ $semaforo->ip }}</td>
                         <td>
-                            <a href="{{ route('config.semaforo.edit', $semaforo->id) }}" class="btn btn-primary btn-sm">Editar</a>
+                            <div style="display: flex; gap: 5px;">
+                                <a href="{{ route('config.semaforo.edit', $semaforo->id) }}" class="btn btn-primary btn-sm">Editar</a>
+
+                                <form action="{{ route('config.semaforo.destroy', $semaforo->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este registro?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                                </form>
+                            </div>
                         </td>
+
                     </tr>
                 @endforeach
             </tbody>

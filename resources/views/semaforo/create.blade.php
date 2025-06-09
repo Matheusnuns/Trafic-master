@@ -50,12 +50,12 @@
 
                                 <div class="form-group col-md-9 mb-2">
                                     <label class="small">Relatório</label>
-                                    <textarea name="relatorio[]" class="form-control form-control-sm" rows="3"></textarea>
+                                <textarea name="relatorio[]" class="form-control form-control-sm" rows="2" style="max-width: 400px;"></textarea>
                                 </div>
 
                                 <div class="form-group col-md-6 mb-2">
                                     <label class="small">Observações</label>
-                                    <textarea name="obs[]" class="form-control form-control-sm" rows="3"></textarea>
+                                <textarea name="obs[]" class="form-control form-control-sm" rows="2" style="max-width: 400px;"></textarea>
                                 </div>
 
                                 <div class="form-group col-md-4 mb-2">

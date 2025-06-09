@@ -186,5 +186,13 @@ Route::group(['middleware' => ['auth']], function () {
     //Route::get('semaforo/editarGrupo/{grupoId}', [SemaforoController::class, 'editGrupo'])->name('semaforo.editGrupo');
 
     Route::get('/semaforo/config/{controlador}', [SemaforoController::class, 'getConfig']);
+Route::prefix('config/semaforo')->name('config.semaforo.')->group(function () {
+    Route::get('/', [SemaforoConfigController::class, 'index'])->name('index');
+    Route::get('/create', [SemaforoConfigController::class, 'create'])->name('create');
+    Route::post('/', [SemaforoConfigController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [SemaforoConfigController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [SemaforoConfigController::class, 'update'])->name('update');
+    Route::delete('/{id}', [SemaforoConfigController::class, 'destroy'])->name('destroy'); // rota destroy
+});
 
 });
