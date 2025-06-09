@@ -159,9 +159,9 @@ for ($i = 0; $i < $total; $i++) {
         return redirect()->route('semaforo.index')->with('success', 'Semáforo excluído com sucesso.');
     }
 
-    public function getConfig($nome)
+    public function getConfig($controlador)
     {
-        $config = SemaforoConfig::where('nome', $nome)->first();
+        $config = SemaforoConfig::where('controladores', $controlador)->first();
 
         if ($config) {
             return response()->json([

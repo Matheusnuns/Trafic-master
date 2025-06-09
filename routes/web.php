@@ -181,9 +181,10 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     Route::get('semaforos',                      'SemaforoController@index')->name('semaforo.index');
-    Route::get('/semaforo/config/{nome}', [App\Http\Controllers\SemaforoController::class, 'getConfig']);
-Route::put('semaforo/updateGrupo/{grupoId}', [SemaforoController::class, 'updateGrupo'])->name('semaforo.updateGrupo');
-//Route::get('semaforo/editarGrupo/{grupoId}', [SemaforoController::class, 'editGrupo'])->name('semaforo.editGrupo');
+    // Route::get('/semaforo/config/{nome}', [App\Http\Controllers\SemaforoController::class, 'getConfig']);
+    Route::put('semaforo/updateGrupo/{grupoId}', [SemaforoController::class, 'updateGrupo'])->name('semaforo.updateGrupo');
+    //Route::get('semaforo/editarGrupo/{grupoId}', [SemaforoController::class, 'editGrupo'])->name('semaforo.editGrupo');
 
+    Route::get('/semaforo/config/{controlador}', [SemaforoController::class, 'getConfig']);
 
 });

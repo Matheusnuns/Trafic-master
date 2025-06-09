@@ -3,75 +3,69 @@
 @section('content')
 <div class="x_panel ">
     <div class="x_content">
-        <div class="x_title">
-            <h2> Novo Semáforo </h2>
-            <div class="clearfix"></div>
-        </div>
+<div class="x_title" style="display: flex; justify-content: space-between; align-items: center;">
+    <h2 style="margin: 0;">Novo Semaforo</h2>
+    <button type="button" class="btn btn-sm btn-primary" onclick="clonarRegistro()">+ Clonar</button>
+</div>
 
         <div class="x_panel ">
             <div class="x_content">
                 <form class="form-horizontal form-label-left" enctype="multipart/form-data" method="post"
                       action="{{ route('semaforo.store') }}">
                     @csrf
+<div id="semaforo-form-container">
+    <div class="semaforo-form-item">
+        <div class="form-group row">
 
-                    <div id="semaforo-form-container">
-                        <div class="semaforo-form-item">
-                            <div class="form-group row">
-                                <div class="form-group col-md-4">
-                                    <label>Data do Relatório</label>
-                                    <input type="date" name="data_relatorio[]" class="form-control" required>
-                                </div>
+            <div class="form-group col-md-3 mb-2">
+                <label class="small">Data do Relatório</label>
+                <input type="date" name="data_relatorio[]" class="form-control form-control-sm" required>
+            </div>
 
-                                <div class="form-group col-md-4">
-                                    <label>Controladores</label>
-                                    <select name="controladores[]" class="form-control controladores" onchange="buscarDadosControlador(this.value, this)">
-                                        <option value="">Selecione um controlador</option>
-                                        @foreach($controladores as $ctrl)
-                                            <option value="{{ $ctrl->controladores }}">{{ $ctrl->controladores }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+            <div class="form-group col-md-3 mb-2">
+                <label class="small">Controladores</label>
+                <select name="controladores[]" class="form-control form-control-sm controladores" onchange="buscarDadosControlador(this.value, this)">
+                    <option value="">Selecione</option>
+                    @foreach($controladores as $ctrl)
+                        <option value="{{ $ctrl->controladores }}">{{ $ctrl->controladores }}</option>
+                    @endforeach
+                </select>
+            </div>
 
-                                <div class="form-group col-md-4">
-                                    <label>Modelo</label>
-                                    <input type="text" name="modelo[]" class="form-control">
-                                </div>
+            <div class="form-group col-md-3 mb-2">
+                <label class="small">Modelo</label>
+                <input type="text" name="modelo[]" class="form-control form-control-sm">
+            </div>
 
-                                <div class="form-group col-md-3">
-                                    <label>Endereço</label>
-                                    <input type="text" name="endereco[]" class="form-control endereco">
-                                </div>
+            <div class="form-group col-md-3 mb-2">
+                <label class="small">Endereço</label>
+                <input type="text" name="endereco[]" class="form-control form-control-sm endereco">
+            </div>
 
-                                <div class="form-group col-md-3">
-                                    <label>IP</label>
-                                    <input type="text" name="ip[]" class="form-control ip">
-                                </div>
+            <div class="form-group col-md-3 mb-2">
+                <label class="small">IP</label>
+                <input type="text" name="ip[]" class="form-control form-control-sm ip">
+            </div>
 
-                                <div class="form-group col-md-9">
-                                    <label>Relatório</label>
-                                    <textarea name="relatorio[]" class="form-control" rows="4"></textarea>
-                                </div>
+            <div class="form-group col-md-6 mb-2">
+                <label class="small">Relatório</label>
+                <textarea name="relatorio[]" class="form-control form-control-sm" rows="3"></textarea>
+            </div>
 
-                                <div class="form-group col-md-9">
-                                    <label>Observações</label>
-                                    <textarea name="obs[]" class="form-control" rows="3"></textarea>
-                                </div>
+            <div class="form-group col-md-6 mb-2">
+                <label class="small">Observações</label>
+                <textarea name="obs[]" class="form-control form-control-sm" rows="3"></textarea>
+            </div>
 
-                                <div class="form-group col-md-3">
-                                    <label>Anexar mídia (opcional)</label>
-                                    <input type="file" name="imagem[]" class="form-control"
-                                           accept="image/*,video/*,.pdf,.doc,.docx,.xml">
-                                </div>
-                            </div>
-                            <hr>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-md-4 mb-2">
-                            <button type="button" class="btn btn-sm btn-primary" onclick="clonarRegistro()">+ Clonar</button>
-                        </div>
-                    </div>
+            <div class="form-group col-md-4 mb-2">
+                <label class="small">Anexar mídia</label>
+                <input type="file" name="imagem[]" class="form-control form-control-sm"
+                       accept="image/*,video/*,.pdf,.doc,.docx,.xml">
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>
 
                     <div class="clearfix"></div>
                     <div class="ln_solid"> </div>
@@ -112,16 +106,7 @@
 
         originalInputs.forEach((input, index) => {
             cloneInputs[index].value = input.value;
-
         });
-        // Limpa os valores dos inputs no clone
-        // clone.querySelectorAll('input, textarea, select').forEach(el => {
-        //     if (el.type === 'file') {
-        //         el.value = ''; // arquivos não podem ser programaticamente limpos por segurança
-        //     } else {
-        //         el.value = '';
-        //     }
-        // });
 
         container.appendChild(clone);
     }
