@@ -43,6 +43,13 @@ public function store(Request $request)
         $semaforo = SemaforoConfig::findOrFail($id); // corrigido
         return view('configs.semaforo.edit', compact('semaforo'));
     }
+    public function destroy($id)
+{
+    $config = SemaforoConfig::findOrFail($id);
+    $config->delete();
+
+    return redirect()->route('semaforoConfig.index')->with('success', 'Configuração excluída com sucesso.');
+}
 
     public function update(Request $request, $id)
 {
