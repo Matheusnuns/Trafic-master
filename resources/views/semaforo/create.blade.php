@@ -100,33 +100,31 @@ function clonarRegistro() {
     const original = container.querySelector('.semaforo-form-item');
     const clone = original.cloneNode(true);
 
-    // copiar os valores dos inputs
-    const originalInputs = original.querySelectorAll('input, textarea, select');
-    const cloneInputs = clone.querySelectorAll('input, textarea, select');
-
-    originalInputs.forEach((input, index) => {
-        cloneInputs[index].value = input.value;
-    });
+    // Remove o container do Data do Relatório inteiro (label + input)
+    const dataRelatorioDiv = clone.querySelector('div.form-group.col-md-3.mb-2');
+    if (dataRelatorioDiv && dataRelatorioDiv.querySelector('input[name="data_relatorio[]"]')) {
+        dataRelatorioDiv.remove();
+    }
 
     container.appendChild(clone);
 
-    // Mostrar botão Excluir, pois tem mais de 1 formulário agora
+    // Mostrar botão "Excluir" caso tenha mais de 1 formulário
     document.getElementById('btn-excluir').style.display = 'inline-block';
 }
 
-function excluirUltimoRegistro() {
-    const container = document.getElementById('semaforo-form-container');
-    const items = container.querySelectorAll('.semaforo-form-item');
+    function excluirUltimoRegistro() {
+        const container = document.getElementById('semaforo-form-container');
+        const items = container.querySelectorAll('.semaforo-form-item');
 
-    if(items.length > 1) {
-        items[items.length - 1].remove();
-    }
+        if(items.length > 1) {
+            items[items.length - 1].remove();
+        }
 
-    // Se sobrar só 1 formulário, esconder botão Excluir
-    if(container.querySelectorAll('.semaforo-form-item').length === 1) {
-        document.getElementById('btn-excluir').style.display = 'none';
+        // Se sobrar só 1 formulário, esconder botão Excluir
+        if(container.querySelectorAll('.semaforo-form-item').length === 1) {
+            document.getElementById('btn-excluir').style.display = 'none';
+        }
     }
-}
 
     function buscarDadosControlador(nome, element) {
         if (!nome) return;
