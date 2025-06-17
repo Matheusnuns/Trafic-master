@@ -12,17 +12,17 @@
 <form class="form-horizontal form-label-left" method="post" action="{{ route('config.semaforo.store') }}">
     @csrf
 
-    <div class="form-group">
+    <div class="form-group col-md-3">
         <label>Nome</label>
         <input type="text" name="controladores" class="form-control" required>
     </div>
 
-    <div class="form-group">
+    <div class="form-group col-md-3">
         <label class="control-label">Endereço</label>
         <input type="text" name="endereco" class="form-control" required>
     </div>
 
-    <div class="form-group">
+    <div class="form-group col-md-3">
         <label class="control-label">IP</label>
         <input type="text" name="ip" class="form-control" required>
     </div>
