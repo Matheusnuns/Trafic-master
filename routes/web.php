@@ -168,25 +168,23 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('equipamentotipo',          'configs\equipamento\EquipamentoTipoController');
 
 
-    // Route::prefix('config/semaforo')->name('config.semaforo.')->group(function () {
-    //     Route::get('/', 'configs\semaforo\SemaforoConfigController@index')->name('index');
-    //     Route::get('/create', 'configs\semaforo\SemaforoConfigController@create')->name('create');
-    //     Route::post('/', 'configs\semaforo\SemaforoConfigController@store')->name('store');
-    //     Route::get('/{id}/edit', 'configs\semaforo\SemaforoConfigController@edit')->name('edit');
-    //     Route::put('/{id}', 'configs\semaforo\SemaforoConfigController@update')->name('update');
-    // });
+    
     Route::prefix('config')->name('config.')->group(function () {
-        Route::resource('semaforo', 'configs\semaforo\SemaforoConfigController');
+    Route::resource('semaforo', 'configs\semaforo\SemaforoConfigController');
     });
 
 
     Route::get('semaforos',                      'SemaforoController@index')->name('semaforo.index');
     // Route::get('/semaforo/config/{nome}', [App\Http\Controllers\SemaforoController::class, 'getConfig']);
     Route::put('semaforo/updateGrupo/{grupoId}', [SemaforoController::class, 'updateGrupo'])->name('semaforo.updateGrupo');
+    Route::put('/config/semaforo/update-group', [SemaforoConfigController::class, 'updateGroup'])->name('semaforo.updateGroup');
+    Route::put('/semaforo/{id}', [SemaforoConfigController::class, 'update'])->name('semaforo.update');
+
     //Route::get('semaforo/editarGrupo/{grupoId}', [SemaforoController::class, 'editGrupo'])->name('semaforo.editGrupo');
+    Route::resource('semaforo', 'configs\semaforo\SemaforoConfigController');
 
     Route::get('/semaforo/config/{controlador}', [SemaforoController::class, 'getConfig']);
-Route::prefix('config/semaforo')->name('config.semaforo.')->group(function () {
+    Route::prefix('config/semaforo')->name('config.semaforo.')->group(function () {
     Route::get('/', [SemaforoConfigController::class, 'index'])->name('index');
     Route::get('/create', [SemaforoConfigController::class, 'create'])->name('create');
     Route::post('/', [SemaforoConfigController::class, 'store'])->name('store');
