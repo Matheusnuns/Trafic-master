@@ -7,57 +7,51 @@
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-<form action="{{ route('semaforo.updateGrupo', $grupoId) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
+            <form action="{{ route('semaforo.updateGrupo', $grupoId) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
 
-
-                @foreach($grupo as $index => $semaforo)
-                    @php $isMain = $index === 0; @endphp
-                    <div class="semaforo-bloco {{ $isMain ? '' : 'clone-bloco d-none' }}">
+                @foreach($grupo as $semaforo)
+                    <div class="semaforo-bloco">
                         <input type="hidden" name="id[]" value="{{ $semaforo->id }}">
 
                         <div class="form-group row">
-                            <div class="form-group col-md-4">
-                                <label>Data do Relatório</label>
-                                <input type="date" name="data_relatorio[]" class="form-control"
-                                       value="{{ $semaforo->data_relatorio }}" required>
-                            </div>
 
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-2">
                                 <label>Controladores</label>
                                 <input type="text" name="controladores[]" class="form-control"
                                        value="{{ $semaforo->controladores }}">
                             </div>
 
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-2">
                                 <label>Modelo</label>
                                 <input type="text" name="modelo[]" class="form-control"
                                        value="{{ $semaforo->modelo }}">
                             </div>
 
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label>Endereço</label>
                                 <input type="text" name="endereco[]" class="form-control"
                                        value="{{ $semaforo->endereco }}">
                             </div>
 
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label>IP</label>
-                                <input type="text" name="ip[]" class="form-control" value="{{ $semaforo->ip }}">
+                                <input type="text" name="ip[]" class="form-control"
+                                       value="{{ $semaforo->ip }}">
                             </div>
 
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-6">
                                 <label>Relatório</label>
                                 <textarea name="relatorio[]" class="form-control" rows="3">{{ $semaforo->relatorio }}</textarea>
                             </div>
 
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-6">
                                 <label>Observações</label>
                                 <textarea name="obs[]" class="form-control" rows="2">{{ $semaforo->obs }}</textarea>
                             </div>
 
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-5">
                                 <label>Imagem</label>
                                 <input type="file" name="imagem[]" class="form-control">
                                 @if ($semaforo->imagem)
@@ -65,19 +59,9 @@
                                 @endif
                             </div>
                         </div>
-                        @if(!$isMain)
-                            <hr>
-                        @endif
+                        <hr>
                     </div>
                 @endforeach
-
-                @if($grupo->count() > 1)
-                    <div class="form-group text-center">
-                        <button type="button" id="toggleClones" class="btn btn-outline-primary btn-sm">
-                            Mostrar clones ({{ $grupo->count() - 1 }})
-                        </button>
-                    </div>
-                @endif
 
                 <div class="text-right">
                     <a href="{{ route('semaforo.index') }}" class="btn btn-secondary">Cancelar</a>
@@ -87,15 +71,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-<script>
-    document.getElementById('toggleClones')?.addEventListener('click', function () {
-        const clones = document.querySelectorAll('.clone-bloco');
-        clones.forEach(el => el.classList.toggle('d-none'));
-        this.textContent = this.textContent.includes('Mostrar')
-            ? 'Ocultar clones'
-            : 'Mostrar clones ({{ $grupo->count() - 1 }})';
-    });
-</script>
-@endpush

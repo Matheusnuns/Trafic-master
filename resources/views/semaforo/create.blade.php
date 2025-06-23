@@ -100,15 +100,20 @@ function clonarRegistro() {
     const original = container.querySelector('.semaforo-form-item');
     const clone = original.cloneNode(true);
 
-    // Remove o container do Data do Relatório inteiro (label + input)
+    // ✅ Remove o campo Data do Relatório no clone
     const dataRelatorioDiv = clone.querySelector('div.form-group.col-md-3.mb-2');
-    if (dataRelatorioDiv && dataRelatorioDiv.querySelector('input[name="data_relatorio[]"]')) {
+    if (dataRelatorioDiv) {
         dataRelatorioDiv.remove();
     }
 
+    // Limpa os inputs e textareas (exceto file)
+    clone.querySelectorAll('input, textarea').forEach(input => {
+        if (input.type === 'file') return;
+        input.value = '';
+    });
+
     container.appendChild(clone);
 
-    // Mostrar botão "Excluir" caso tenha mais de 1 formulário
     document.getElementById('btn-excluir').style.display = 'inline-block';
 }
 

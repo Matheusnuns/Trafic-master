@@ -45,46 +45,46 @@ public function index()
         $controladores = SemaforoConfig::all(['controladores']);
         return view('semaforo.create', compact('controladores'));
     }
+public function store(Request $request)
+{
+    $request->validate([
+        'controladores.*'  => 'required|string|max:255',
+        'modelo.*'         => 'nullable|string|max:255',
+        'endereco.*'       => 'nullable|string|max:255',
+        'ip.*'             => 'nullable|ip',
+        'relatorio.*'      => 'nullable|string',
+        'obs.*'            => 'nullable|string',
+        'imagem.*'         => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,mp4,pdf,doc,docx,xml|max:10240',
+    ]);
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'data_relatorio.*' => 'required|date',
-            'controladores.*'  => 'required|string|max:255',
-            'modelo.*'         => 'nullable|string|max:255',
-            'endereco.*'       => 'nullable|string|max:255',
-            'ip.*'             => 'nullable|ip',
-            'relatorio.*'      => 'nullable|string',
-            'obs.*'            => 'nullable|string',
-            'imagem.*'         => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,mp4,pdf,doc,docx,xml|max:10240',
-        ]);
+    $grupoId = Str::uuid(); // Grupo único
+    $total = count($request->controladores);
 
-        $grupoId = Str::uuid(); // grupo único para todos os registros enviados
+    // ✅ Captura a data do primeiro formulário
+    $dataPrincipal = $request->data_relatorio[0] ?? now();
 
-        $total = count($request->data_relatorio);
+    for ($i = 0; $i < $total; $i++) {
+        $semaforo = new Semaforo();
+        $semaforo->data_relatorio = $request->data_relatorio[$i] ?? $dataPrincipal;
+        $semaforo->controladores  = $request->controladores[$i];
+        $semaforo->modelo         = $request->modelo[$i] ?? null;
+        $semaforo->endereco       = $request->endereco[$i] ?? null;
+        $semaforo->ip             = $request->ip[$i] ?? null;
+        $semaforo->relatorio      = $request->relatorio[$i] ?? null;
+        $semaforo->obs            = $request->obs[$i] ?? null;
+        $semaforo->grupo_id       = $grupoId;
 
-        for ($i = 0; $i < $total; $i++) {
-            $semaforo = new Semaforo();
-            $semaforo->data_relatorio = $request->data_relatorio[$i];
-            $semaforo->controladores  = $request->controladores[$i];
-            $semaforo->modelo         = $request->modelo[$i] ?? null;
-            $semaforo->endereco       = $request->endereco[$i] ?? null;
-            $semaforo->ip             = $request->ip[$i] ?? null;
-            $semaforo->relatorio      = $request->relatorio[$i] ?? null;
-            $semaforo->obs            = $request->obs[$i] ?? null;
-            $semaforo->grupo_id       = $grupoId;
-
-            if ($request->hasFile("imagem.$i")) {
-                $file = $request->file('imagem')[$i];
-                $path = $file->store('semaforos', 'public');
-                $semaforo->imagem = $path;
-            }
-
-            $semaforo->save();
+        if (isset($request->file('imagem')[$i])) {
+            $file = $request->file('imagem')[$i];
+            $path = $file->store('semaforos', 'public');
+            $semaforo->imagem = $path;
         }
 
-        return redirect()->route('semaforo.index')->with('success', 'Semáforos salvos com sucesso.');
+        $semaforo->save();
     }
+
+    return redirect()->route('semaforo.index')->with('success', 'Semáforos salvos com sucesso.');
+}
 
     public function show(Semaforo $semaforo)
     {
@@ -92,31 +92,35 @@ public function index()
     }
 public function edit(Semaforo $semaforo)
 {
+    // Busca todos os registros com o mesmo grupo_id
     $grupo = Semaforo::where('grupo_id', $semaforo->grupo_id)->get();
     $grupoId = $semaforo->grupo_id;
 
     return view('semaforo.edit', compact('grupo', 'grupoId'));
 }
-
 public function updateGrupo(Request $request, $grupoId)
 {
-    $ids = $request->id;
-    $datas = $request->data_relatorio;
-    $controladores = $request->controladores;
-    $modelos = $request->modelo;
-    $enderecos = $request->endereco;
-    $ips = $request->ip;
-    $relatorios = $request->relatorio;
-    $obs = $request->obs;
-    $imagens = $request->file('imagem');
+    $ids = $request->id ?? [];
+    $datas = $request->data_relatorio ?? [];
+    $controladores = $request->controladores ?? [];
+    $modelos = $request->modelo ?? [];
+    $enderecos = $request->endereco ?? [];
+    $ips = $request->ip ?? [];
+    $relatorios = $request->relatorio ?? [];
+    $obs = $request->obs ?? [];
+    $imagens = $request->file('imagem') ?? [];
 
-    foreach ($datas as $index => $data) {
+    // 🚨 Verifica se tem dados para atualizar
+    if (empty($controladores)) {
+        return back()->with('error', 'Nenhum dado enviado para atualização.');
+    }
+
+    foreach ($controladores as $index => $controlador) {
         $id = $ids[$index] ?? null;
 
-        // Dados base
         $dados = [
-            'data_relatorio' => $data,
-            'controladores' => $controladores[$index] ?? null,
+            'data_relatorio' => $datas[$index] ?? now(),
+            'controladores' => $controlador,
             'modelo' => $modelos[$index] ?? null,
             'endereco' => $enderecos[$index] ?? null,
             'ip' => $ips[$index] ?? null,
@@ -125,7 +129,7 @@ public function updateGrupo(Request $request, $grupoId)
             'grupo_id' => $grupoId,
         ];
 
-        // Upload de imagem (se tiver)
+        // Upload da imagem se tiver
         if (isset($imagens[$index])) {
             $imagem = $imagens[$index];
             if ($imagem) {
@@ -136,13 +140,13 @@ public function updateGrupo(Request $request, $grupoId)
         }
 
         if ($id) {
-            // Atualiza registro existente
+            // Atualiza se existir
             $semaforo = Semaforo::find($id);
             if ($semaforo) {
                 $semaforo->update($dados);
             }
         } else {
-            // Cria novo registro (caso não tenha id)
+            // Cria novo se não tiver id
             Semaforo::create($dados);
         }
     }
