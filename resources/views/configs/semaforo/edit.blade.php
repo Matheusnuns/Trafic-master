@@ -7,7 +7,7 @@
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-                    <form method="post" action="{{ route('semaforo.update', $semaforo->id) }}"> 
+                        <form method="post" action="{{ route('config.semaforo.update', $semaforo->id) }}">
                         @csrf
                         @method('PUT')
 

@@ -54,7 +54,8 @@ public function edit($id)
     }
 public function update(Request $request, $id)
 {
-    $semaforo = Semaforo::findOrFail($id);
+    $semaforo = SemaforoConfig::findOrFail($id);
+
     $semaforo->update($request->all());
 
     return redirect()->route('config.semaforo.index')
