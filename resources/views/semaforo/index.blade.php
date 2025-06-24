@@ -3,54 +3,46 @@
 @section('content')
     <div class="x_panel modal-content">
         <div class="x_title">
-{{-- teste sem restrição --}}
-{{-- @can('CADASTRAR SEMAFORO') --}}
-<a href="{{ route('semaforo.create') }}" class="btn-circulo btn btn-success btn-md pull-right" data-toggle="tooltip"
-data-placement="bottom" title="Adicionar novo registro">
-<i class="fa fa-plus"></i> Novo Registro
-</a>
-{{-- @endcan --}}
-
-
+            <a href="{{ route('semaforo.create') }}" class="btn-circulo btn btn-success btn-md pull-right" data-toggle="tooltip"
+               data-placement="bottom" title="Adicionar novo registro">
+                <i class="fa fa-plus"></i> Novo Registro
+            </a>
             <div class="clearfix"></div>
         </div>
 
         <div class="x_content">
             <table id="tb_semaforo" class="table table-hover table-striped compact responsive display nowrap" cellspacing="0" width="100%">
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Endereço</th>
-                        <th>Modelo</th>
-                        <th>Controladores</th>
-                        <th>IP</th>
-
-                            <th>Ações</th>
-
-                    </tr>
-                </thead>
+                <thead style="display: none;"></thead> 
 
                 <tbody>
+                    <tr>
+                        <td colspan="2" class="pull-left" style="font-size: 18px; font-weight: bold;">
+                            Relatório do dia
+                        </td>
+                    </tr>
+
                     @foreach ($semaforos as $semaforo)
                         <tr>
-                            <td>{{ \Carbon\Carbon::parse($semaforo->data_relatorio)->format('d/m/Y') }}</td>
-                            <td>{{ $semaforo->endereco }}</td>
-                            <td>{{ $semaforo->modelo }}</td>
-                            <td>{{ $semaforo->controladores }}</td>
-                            <td>{{ $semaforo->ip }}</td>
+                            <td>
+                                {{ \Carbon\Carbon::parse($semaforo->data_relatorio)->format('d/m/Y') }}
+                            </td>
 
-                                <td class="actions" style="display: flex">
-                                    <a href="{{ route('semaforo.edit', $semaforo->id) }}" class="btn btn-warning btn-xs action botao_acao" title="Editar">
-                                        <i class="glyphicon glyphicon-pencil"></i>
+                            <td class="actions text-right">
+                                <div class="btn-group" role="group">
+                                    <a href="{{ route('semaforo.edit', $semaforo->id) }}" class="btn btn-info btn-xs action botao_acao" title="Visualizar">
+                                        <i class="fa fa-eye"></i>
                                     </a>
-                                    <form method="POST" action="{{ route('semaforo.destroy', $semaforo->id) }}" onsubmit="confirmarDeletar(event)">
+
+                                    <form method="POST" action="{{ route('semaforo.destroy', $semaforo->id) }}" onsubmit="confirmarDeletar(event)" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-xs action botao_acao" title="Excluir">
                                             <i class="glyphicon glyphicon-remove"></i>
                                         </button>
                                     </form>
-                                </td>
+                                </div>
+                            </td>
+
                         </tr>
                     @endforeach
                 </tbody>
@@ -78,8 +70,11 @@ data-placement="bottom" title="Adicionar novo registro">
                 stateSave: true,
                 stateDuration: -1,
                 responsive: true,
-                paging: false, // Laravel já faz paginação
-                searching: false // opcional, já que Laravel pagina com filtro via controller se necessário
+                paging: false,
+                searching: false,
+                headerCallback: function(thead, data, start, end, display) {
+                    $(thead).remove();
+                }
             });
         });
 
