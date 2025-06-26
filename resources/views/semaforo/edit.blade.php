@@ -3,7 +3,7 @@
 @section('content')
     <div class="x_panel">
         <div class="x_title">
-            <h2>Editar Semáforo</h2>
+            <h2>Semáforo</h2>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
