@@ -95,26 +95,51 @@
         event.preventDefault();
         window.location.href = "{{ route('semaforo.index') }}";
     });
-function clonarRegistro() {
+    function clonarRegistro() {
     const container = document.getElementById('semaforo-form-container');
     const original = container.querySelector('.semaforo-form-item');
     const clone = original.cloneNode(true);
 
-    // ✅ Remove o campo Data do Relatório no clone
+    // Remove o campo "Data do Relatório"
     const dataRelatorioDiv = clone.querySelector('div.form-group.col-md-3.mb-2');
     if (dataRelatorioDiv) {
         dataRelatorioDiv.remove();
     }
 
-    // Limpa os inputs e textareas (exceto file)
+    // Limpa os campos
     clone.querySelectorAll('input, textarea').forEach(input => {
-        if (input.type === 'file') return;
-        input.value = '';
+        if (input.type !== 'file') {
+            input.value = '';
+        }
     });
+
+    // Adiciona botão de exclusão abaixo de "Observações"
+    const obsDiv = clone.querySelector('textarea[name="obs[]"]')?.closest('.form-group');
+    if (obsDiv && !clone.querySelector('.btn-remover-clone')) {
+        const btnRemover = document.createElement('button');
+        btnRemover.type = 'button';
+        btnRemover.className = 'btn btn-sm btn-danger btn-remover-clone pull-right';
+        btnRemover.textContent = 'Excluir';
+        btnRemover.style.marginTop = '10px';
+
+        btnRemover.onclick = function () {
+            clone.remove();
+
+            // Esconde botão global se restar só um
+            if (container.querySelectorAll('.semaforo-form-item').length === 1) {
+                document.getElementById('btn-excluir').style.display = 'none';
+            }
+        };
+
+        obsDiv.parentNode.insertBefore(btnRemover, obsDiv.nextSibling);
+    }
 
     container.appendChild(clone);
 
-    document.getElementById('btn-excluir').style.display = 'inline-block';
+    // Mostra botão "Excluir" global se houver mais de 1 formulário
+    if (container.querySelectorAll('.semaforo-form-item').length > 1) {
+        document.getElementById('btn-excluir').style.display = 'inline-block';
+    }
 }
 
     function excluirUltimoRegistro() {

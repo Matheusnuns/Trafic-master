@@ -85,11 +85,15 @@ public function store(Request $request)
 
     return redirect()->route('semaforo.index')->with('success', 'Semáforos salvos com sucesso.');
 }
+public function show(Semaforo $semaforo)
+{
+    $grupo = Semaforo::where('grupo_id', $semaforo->grupo_id)->get();
+    $grupoId = $semaforo->grupo_id;
 
-    public function show(Semaforo $semaforo)
-    {
-        return view('semaforo.show', compact('semaforo'));
-    }
+    // Envia o modo de visualização
+    return view('semaforo.edit', compact('grupo', 'grupoId'))->with('somenteVisualizacao', true);
+}
+
 public function edit(Semaforo $semaforo)
 {
     // Busca todos os registros com o mesmo grupo_id

@@ -3,71 +3,60 @@
 @section('content')
     <div class="x_panel">
         <div class="x_title">
-            <h2>Semáforo</h2>
+            <h2>Visualizar Semáforo</h2>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <form action="{{ route('semaforo.updateGrupo', $grupoId) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
+            @foreach($grupo as $semaforo)
+                <div class="semaforo-bloco">
+                    <div class="form-group row">
 
-                @foreach($grupo as $semaforo)
-                    <div class="semaforo-bloco">
-                        <input type="hidden" name="id[]" value="{{ $semaforo->id }}">
-
-                        <div class="form-group row">
-
-                            <div class="form-group col-md-2">
-                                <label>Controladores</label>
-                                <input type="text" name="controladores[]" class="form-control"
-                                       value="{{ $semaforo->controladores }}">
-                            </div>
-
-                            <div class="form-group col-md-2">
-                                <label>Modelo</label>
-                                <input type="text" name="modelo[]" class="form-control"
-                                       value="{{ $semaforo->modelo }}">
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <label>Endereço</label>
-                                <input type="text" name="endereco[]" class="form-control"
-                                       value="{{ $semaforo->endereco }}">
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <label>IP</label>
-                                <input type="text" name="ip[]" class="form-control"
-                                       value="{{ $semaforo->ip }}">
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label>Relatório</label>
-                                <textarea name="relatorio[]" class="form-control" rows="3">{{ $semaforo->relatorio }}</textarea>
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label>Observações</label>
-                                <textarea name="obs[]" class="form-control" rows="2">{{ $semaforo->obs }}</textarea>
-                            </div>
-
-                            <div class="form-group col-md-5">
-                                <label>Imagem</label>
-                                <input type="file" name="imagem[]" class="form-control">
-                                @if ($semaforo->imagem)
-                                    <small class="form-text text-muted">Atual: {{ $semaforo->imagem }}</small>
-                                @endif
-                            </div>
+                        <div class="form-group col-md-2">
+                            <label>Controladores</label>
+                            <input type="text" class="form-control" value="{{ $semaforo->controladores }}" readonly>
                         </div>
-                        <hr>
-                    </div>
-                @endforeach
 
-                <div class="text-right">
-                    <a href="{{ route('semaforo.index') }}" class="btn btn-secondary">Cancelar</a>
-                    <button type="submit" class="btn btn-success">Salvar Grupo</button>
+                        <div class="form-group col-md-2">
+                            <label>Modelo</label>
+                            <input type="text" class="form-control" value="{{ $semaforo->modelo }}" readonly>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label>Endereço</label>
+                            <input type="text" class="form-control" value="{{ $semaforo->endereco }}" readonly>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label>IP</label>
+                            <input type="text" class="form-control" value="{{ $semaforo->ip }}" readonly>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Relatório</label>
+                            <textarea class="form-control" rows="3" readonly>{{ $semaforo->relatorio }}</textarea>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Observações</label>
+                            <textarea class="form-control" rows="2" readonly>{{ $semaforo->obs }}</textarea>
+                        </div>
+
+                        <div class="form-group col-md-5">
+                            <label>Imagem</label>
+                            @if ($semaforo->imagem)
+                                <p><a href="{{ asset('caminho/para/imagens/' . $semaforo->imagem) }}" target="_blank">{{ $semaforo->imagem }}</a></p>
+                            @else
+                                <p><em>Sem imagem</em></p>
+                            @endif
+                        </div>
+                    </div>
+                    <hr>
                 </div>
-            </form>
+            @endforeach
+
+            <div class="text-right">
+                <a href="{{ route('semaforo.index') }}" class="btn btn-primary">Voltar</a>
+            </div>
         </div>
     </div>
 @endsection
