@@ -37,28 +37,28 @@ class SemaforoConfigController extends Controller
 
         return redirect()->route('config.semaforo.index')->with('success', 'Semáforo criado com sucesso!');
             }
-public function edit($id)
-{
-    $semaforo = SemaforoConfig::findOrFail($id);
+    public function edit($id)
+    {
+        $semaforo = SemaforoConfig::findOrFail($id);
 
-    return view('configs.semaforo.edit', compact('semaforo'));
-}
-
-
-        public function destroy($id)
-        {
-            $config = SemaforoConfig::findOrFail($id);
-            $config->delete();
-
-            return redirect()->route('config.semaforo.index')->with('success', 'Configuração excluída com sucesso.');
+        return view('configs.semaforo.edit', compact('semaforo'));
     }
-public function update(Request $request, $id)
-{
-    $semaforo = SemaforoConfig::findOrFail($id);
 
-    $semaforo->update($request->all());
 
-    return redirect()->route('config.semaforo.index')
-                     ->with('success', 'Semáforo atualizado com sucesso!');
-}
-}
+            public function destroy($id)
+            {
+                $config = SemaforoConfig::findOrFail($id);
+                $config->delete();
+
+                return redirect()->route('config.semaforo.index')->with('success', 'Configuração excluída com sucesso.');
+        }
+    public function update(Request $request, $id)
+    {
+        $semaforo = SemaforoConfig::findOrFail($id);
+
+        $semaforo->update($request->all());
+
+        return redirect()->route('config.semaforo.index')
+                        ->with('success', 'Semáforo atualizado com sucesso!');
+    }
+    }

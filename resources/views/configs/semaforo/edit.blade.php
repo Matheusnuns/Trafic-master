@@ -28,9 +28,9 @@
                             <input type="text" name="ip" class="form-control" value="{{ $semaforo->ip }}">
                         </div>
 
-               <div class="form-group col-md-2 d-flex align-items-center justify-content-center">
-        <button type="submit" class="btn btn-success">Salvar</button>
-    </div>
+                            <div class="form-group col-md-2 d-flex align-items-center justify-content-center">
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                    </div>
                     </form>
 
                 </div>
