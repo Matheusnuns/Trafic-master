@@ -181,11 +181,11 @@ public function updateGrupo(Request $request, $grupoId)
 
         return redirect()->route('semaforo.index')->with('success', 'Semáforo atualizado com sucesso.');
     }
-
-    public function destroy(Semaforo $semaforo)
+    public function destroyGrupo($grupoId)
     {
-        $semaforo->delete();
-        return redirect()->route('semaforo.index')->with('success', 'Semáforo excluído com sucesso.');
+        Semaforo::where('grupo_id', $grupoId)->delete();
+
+        return redirect()->route('semaforo.index')->with('success', 'Todos os registros do grupo foram excluídos.');
     }
 
     public function getConfig($controlador)

@@ -15,7 +15,7 @@
                     <th>Nome</th>
                     <th>Endereço</th>
                     <th>IP</th>
-                    <th>Ações</th> {{-- Coluna para Editar/Excluir --}}
+                    <th>Ações</th> 
                 </tr>
             </thead>
             <tbody>

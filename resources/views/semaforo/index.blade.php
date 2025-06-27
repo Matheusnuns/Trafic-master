@@ -29,14 +29,14 @@
                                 <a href="{{ route('semaforo.edit', $semaforo->id) }}" class="btn btn-info btn-xs" title="Visualizar">
                                     <i class="fa fa-eye"></i>
                                 </a>
+                    <form method="POST" action="{{ route('semaforo.destroyGrupo', $semaforo->grupo_id) }}" onsubmit="confirmarDeletar(event)">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-xs" title="Excluir Grupo">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </button>
+                    </form>
 
-                                <form method="POST" action="{{ route('semaforo.destroy', $semaforo->id) }}" onsubmit="confirmarDeletar(event)">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-xs" title="Excluir">
-                                        <i class="glyphicon glyphicon-remove"></i>
-                                    </button>
-                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

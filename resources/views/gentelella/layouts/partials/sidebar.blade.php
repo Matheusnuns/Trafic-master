@@ -86,7 +86,7 @@
 									</ul>
 								</li>
 							@endif
-                            <li><a href="{{ route('config.semaforo.index') }}"><i class="fa fa-list"></i> Semáforo Config </a></li>
+                            <li><a href="{{ route('config.semaforo.index') }}"><i class="fa fa-list"></i> Criar Semáforo </a></li>
 
 							@if(auth()->user()->can('CONFIG MATERIAL'))
 								<li>
